@@ -1,0 +1,9 @@
+{
+	frankenphp
+}
+
+:80 {
+    root * /var/www/public_html/therapy/public
+    encode zstd br gzip
+    php_server
+}

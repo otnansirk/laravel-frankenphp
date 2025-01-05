@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  app:
+    container_name: therapy_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./source-app:/var/www/public_html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+    depends_on:
+      - db
+    networks:
+      - therapy_nt
+
+  db:
+    container_name: therapy_db
+    image: postgres:13
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - therapy_nt
+
+networks:
+  therapy_nt:
+    name: therapy_nt
+    driver: bridge
+
+volumes:
+  pgdata:

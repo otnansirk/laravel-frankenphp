@@ -1,0 +1,4 @@
+workers:
+  - address: "0.0.0.0:80"
+    pool_size: 8
+    bootstrap: "/var/www/public_html/therapy/public/index.php"
