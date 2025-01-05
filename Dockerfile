@@ -28,6 +28,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY ./source-app .
 
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Install Node.js dependencies
+RUN npm install
+
 RUN chown -R www-data:www-data /var/www/public_html \
     && chmod -R 775 /var/www/public_html/storage \
     && chmod -R 775 /var/www/public_html/bootstrap/cache
